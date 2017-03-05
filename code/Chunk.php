@@ -55,5 +55,22 @@ class Chunk extends DataObject
         return $fields;
     }
 
+    /**
+     * @param $token
+     * @return bool|DBField
+     */
+    public static function get_by_token($token)
+    {
+        if( $chunk = Chunk::get()->find('Token', $token) ) {
+            $type = $chunk->Type;
+            if( !$chunk->hasField($type) ) {
+                user_error( "Chunks do not have property '$type' defined" );
+            }
+            return $chunk->dbObject($type);
+        }
+        return false;
+    }
+
+
 
 }

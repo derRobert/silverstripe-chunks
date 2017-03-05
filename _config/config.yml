@@ -1,0 +1,7 @@
+---
+Name: chunks
+After: framework
+---
+Controller:
+  extensions:
+    - ChunkExtension
