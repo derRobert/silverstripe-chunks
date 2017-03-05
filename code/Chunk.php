@@ -10,8 +10,8 @@ class Chunk extends DataObject
 {
 
     private static $db = array(
-        'Typ'       => "Enum('Line,MultiLine,Html','Line')",
         'Token'     => 'Varchar(255)',
+        'Type'      => "Enum('Line,MultiLine,Html','Line')",
         'Line'      => 'Varchar(255)',
         'MultiLine' => 'Text',
         'Html'      => 'HTMLText',
@@ -24,27 +24,36 @@ class Chunk extends DataObject
         'Token',
     );
 
-    public function getCMSFields() {
+    public function getCMSFields()
+    {
         $f = parent::getCMSFields();
         $f->removeByName('Html');
-        $f->addFieldToTab('Root.Main', TextField::create('Token', 'Kürzel')->setDescription('Eindeutiges Kürzel für das Layout - sollte immer abgesprochen/kommuniziert werden und sich möglichst nicht ändern.'));
-        $f->addFieldToTab('Root.Main', DropdownField::create('Typ', 'Typ', $this->dbObject('Typ')->enumValues()));
 
-        $f->dataFieldByName('EinzeiligerText')->displayIf('Typ')->isEqualTo('einzeiliger Text')->end();
-        $f->dataFieldByName('MehrzeiligerText')->displayIf('Typ')->isEqualTo('mehrzeiliger Text')->end();
+        $f->dataFieldByName('Line')
+            ->displayIf('Type')->isEqualTo('Line')->end();
+        $f->dataFieldByName('MultiLine')
+            ->displayIf('Type')->isEqualTo('MultiLine')->end();
 
-        $f->removeByName('Subsites');
-        $subsites_map = Subsite::get()->map('ID', 'Title');
-        $f->addFieldToTab('Root.Main', CheckboxSetField::create('Subsites', 'Nur für Subsite:', $subsites_map));
-
-
-        $f->addFieldToTab('Root.Main',
+        $f->replaceField('Html',
             DisplayLogicWrapper::create(
                 HtmlEditorField::create('Html', 'Html')
-            )->displayIf('Typ')->isEqualTo('Html')->end()
+            )->displayIf('Type')->isEqualTo('Html')->end()
         );
-
         return $f;
     }
+
+    public function scaffoldFormFields($_params = null)
+    {
+        $fields = parent::scaffoldFormFields($_params);
+        if ($typeField = $fields->dataFieldByName('Type')) {
+            $typeField->setSource(array(
+                'Line'      => _t('Chunk.db_Line', 'Line'),
+                'MultiLine' => _t('Chunk.db_MultiLine', 'MultiLine'),
+                'Html'      => _t('Chunk.db_Html', 'Html'),
+            ));
+        }
+        return $fields;
+    }
+
 
 }

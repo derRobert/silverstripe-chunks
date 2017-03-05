@@ -2,7 +2,7 @@
 	"name": "derrobert/silverstripe-chunks",
 	"type": "silverstripe-module",
 	"license": "BSD-3-Clause",
-	"keywords": ["silverstripe", "cron"],
+	"keywords": ["silverstripe", "module"],
 	"authors": [
 		{
 			"name": "Robert Schwandner",
