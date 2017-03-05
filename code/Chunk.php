@@ -26,7 +26,6 @@ class Chunk extends DataObject
     public function getCMSFields()
     {
         $f = parent::getCMSFields();
-        $f->removeByName('Html');
 
         $fieldText = $f->dataFieldByName('Text');
         if( class_exists('DisplayLogicFormField') ) {
