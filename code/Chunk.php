@@ -44,7 +44,7 @@ class Chunk extends DataObject
         $fields = parent::scaffoldFormFields($_params);
         if ($typeField = $fields->dataFieldByName('Type')) {
             $typeField->setSource(array(
-                'Text' => _t('Chunk.db_Text', 'MultiLine'),
+                'Text' => _t('Chunk.db_Text', 'Text'),
                 'Html' => _t('Chunk.db_Html', 'Html'),
             ));
         }
