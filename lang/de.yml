@@ -4,8 +4,7 @@ de:
     PLURALNAME: 'Platzhalter'
     db_Token: 'Kürzel'
     db_Type: 'Typ'
-    db_Line: 'einzeiliger Text'
-    db_MultiLine: 'mehrzeiliger Text'
+    db_Text: 'einfacher Text'
     db_Html: 'HTML'
     TokenDescription: 'Eindeutiges Kürzel - sollte sich möglichst nicht ändern.'
   ChunkAdmin:

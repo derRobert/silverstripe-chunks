@@ -10,11 +10,10 @@ class Chunk extends DataObject
 {
 
     private static $db = array(
-        'Token'     => 'Varchar(255)',
-        'Type'      => "Enum('Line,MultiLine,Html','Line')",
-        'Line'      => 'Varchar(255)',
-        'MultiLine' => 'Text',
-        'Html'      => 'HTMLText',
+        'Token' => 'Varchar(255)',
+        'Type'  => "Enum('Text,Html','Text')",
+        'Text'  => 'Text',
+        'Html'  => 'HTMLText',
     );
 
     private static $default_sort = '"Token"';
@@ -29,10 +28,8 @@ class Chunk extends DataObject
         $f = parent::getCMSFields();
         $f->removeByName('Html');
 
-        $f->dataFieldByName('Line')
-            ->displayIf('Type')->isEqualTo('Line')->end();
-        $f->dataFieldByName('MultiLine')
-            ->displayIf('Type')->isEqualTo('MultiLine')->end();
+        $f->dataFieldByName('Text')
+            ->displayIf('Type')->isEqualTo('Text')->end();
 
         $f->replaceField('Html',
             DisplayLogicWrapper::create(
@@ -47,9 +44,8 @@ class Chunk extends DataObject
         $fields = parent::scaffoldFormFields($_params);
         if ($typeField = $fields->dataFieldByName('Type')) {
             $typeField->setSource(array(
-                'Line'      => _t('Chunk.db_Line', 'Line'),
-                'MultiLine' => _t('Chunk.db_MultiLine', 'MultiLine'),
-                'Html'      => _t('Chunk.db_Html', 'Html'),
+                'Text' => _t('Chunk.db_Text', 'MultiLine'),
+                'Html' => _t('Chunk.db_Html', 'Html'),
             ));
         }
         return $fields;
@@ -61,16 +57,23 @@ class Chunk extends DataObject
      */
     public static function get_by_token($token)
     {
-        if( $chunk = Chunk::get()->find('Token', $token) ) {
+        if ($chunk = Chunk::get()->find('Token', $token)) {
             $type = $chunk->Type;
-            if( !$chunk->hasField($type) ) {
-                user_error( "Chunks do not have property '$type' defined" );
+            if (!$chunk->hasField($type)) {
+                user_error("Chunks do not have property '$type' defined");
             }
             return $chunk->dbObject($type);
         }
         return false;
     }
 
+    public function forTemplate()
+    {
+        if ($type = $this->Type) {
+            return $this->dbObject($type)->forTemplate();
+        }
+        return false;
+    }
 
 
 }
