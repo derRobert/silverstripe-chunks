@@ -1,0 +1,19 @@
+{
+	"name": "derrobert/silverstripe-chunks",
+	"type": "silverstripe-module",
+	"license": "BSD-3-Clause",
+	"keywords": ["silverstripe", "cron"],
+	"authors": [
+		{
+			"name": "Robert Schwandner",
+			"email": "rs@rob24.de"
+		}
+	],
+	"require": {
+		 "unclecheese/display-logic": "dev-master"
+
+	},
+	"extra": {
+		"installer-name": "chunks"
+	}
+}
