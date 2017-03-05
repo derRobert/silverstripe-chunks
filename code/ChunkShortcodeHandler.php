@@ -8,6 +8,16 @@
  */
 class ChunkShortcodeHandler extends Object
 {
+    /**
+     * Use by Shortcode
+     * e.g.[chunk t=MyToken]
+     * can be set by configuration:
+     * ChunkShortcodeHandler:
+     *   token_identifier: token # or whatever
+     *
+     *
+     * @var string
+     */
     private static $token_identifier = 't';
 
     public static function handle_chunk_shortcode($args, $token = null,$parser = null) {
@@ -18,7 +28,7 @@ class ChunkShortcodeHandler extends Object
         } elseif ( array_key_exists($needle, $args) ) {
             $ident = $args[$needle];
         }
-        if( $chunk = Chunk::get_by_token($ident) ) {
+        if( $chunk = Chunk::by_token($ident) ) {
             return $chunk;
         }
         return false;

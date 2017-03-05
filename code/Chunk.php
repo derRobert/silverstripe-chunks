@@ -28,14 +28,15 @@ class Chunk extends DataObject
         $f = parent::getCMSFields();
         $f->removeByName('Html');
 
-        $f->dataFieldByName('Text')
-            ->displayIf('Type')->isEqualTo('Text')->end();
-
-        $f->replaceField('Html',
-            DisplayLogicWrapper::create(
-                HtmlEditorField::create('Html', 'Html')
-            )->displayIf('Type')->isEqualTo('Html')->end()
-        );
+        $fieldText = $f->dataFieldByName('Text');
+        if( class_exists('DisplayLogicFormField') ) {
+            $fieldText->displayIf('Type')->isEqualTo('Text')->end();
+            $f->replaceField('Html',
+                DisplayLogicWrapper::create(
+                    HtmlEditorField::create('Html', 'Html')
+                )->displayIf('Type')->isEqualTo('Html')->end()
+            );
+        }
         return $f;
     }
 
@@ -52,10 +53,10 @@ class Chunk extends DataObject
     }
 
     /**
-     * @param $token
+     * @param string $token
      * @return bool|DBField
      */
-    public static function get_by_token($token)
+    public static function by_token($token)
     {
         if ($chunk = Chunk::get()->find('Token', $token)) {
             $type = $chunk->Type;

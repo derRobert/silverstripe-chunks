@@ -11,9 +11,11 @@
 	],
 	"require": {
 		 "unclecheese/display-logic": "dev-master"
-
 	},
 	"extra": {
 		"installer-name": "chunks"
-	}
+	},
+    "suggest": {
+      "unclecheese/display-logic": "Nice gui behavior (toggle form fields fields)"
+    }
 }
