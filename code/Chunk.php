@@ -62,14 +62,19 @@ class Chunk extends DataObject
     public static function by_token($token)
     {
         if ($chunk = Chunk::get()->find('Token', $token)) {
-            $type = $chunk->Type;
-            if (!$chunk->hasField($type)) {
-                user_error("Chunks do not have property '$type' defined");
-            }
-            return $chunk->dbObject($type);
+            return $chunk->outputObject();
         }
         return false;
     }
+
+    public function outputObject() {
+        $type = $this->Type;
+        if (!$this->hasField($type)) {
+            user_error("Chunks do not have property '$type' defined");
+        }
+        return $this->dbObject($type);
+    }
+
 
     public function forTemplate()
     {

@@ -24,15 +24,16 @@ class ChunkShortcodeHandler extends Object
         $ident=null;
         $needle = self::config()->token_identifier;
         if( is_array($args) && isset($args['id']) ) {
-            return Chunk::get()->byID((int)$args['id']);
+            $chunk = Chunk::get()->byID((int)$args['id']);
+            return $chunk->outputObject();
         } else {
             if ($token) {
                 $ident = $token;
             } elseif (array_key_exists($needle, $args)) {
                 $ident = $args[$needle];
             }
-            if ($chunk = Chunk::by_token($ident)) {
-                return $chunk;
+            if ($output = Chunk::by_token($ident)) {
+                return $output;
             }
         }
         return false;
