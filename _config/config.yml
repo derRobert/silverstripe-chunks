@@ -1,7 +1,12 @@
 ---
 Name: chunks
-After: framework
+After: 'framework/*','cms/*'
 ---
 Controller:
   extensions:
     - ChunkExtension
+Shortcodable:
+  shortcodable_classes:
+    - Chunk
+  htmleditor_names:
+    - cms

@@ -9,13 +9,11 @@
 			"email": "rs@rob24.de"
 		}
 	],
-	"require": {
-		 "unclecheese/display-logic": "dev-master"
-	},
 	"extra": {
 		"installer-name": "chunks"
 	},
     "suggest": {
-      "unclecheese/display-logic": "Nice gui behavior (toggle form fields fields)"
+      "unclecheese/display-logic": "Nice gui behavior (toggle form fields fields)",
+      "sheadawson/silverstripe-shortcodable": "Nice gui for HtmlEditor"
     }
 }

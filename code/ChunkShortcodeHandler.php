@@ -23,14 +23,20 @@ class ChunkShortcodeHandler extends Object
     public static function handle_chunk_shortcode($args, $token = null,$parser = null) {
         $ident=null;
         $needle = self::config()->token_identifier;
-        if( $token ) {
-            $ident = $token;
-        } elseif ( array_key_exists($needle, $args) ) {
-            $ident = $args[$needle];
-        }
-        if( $chunk = Chunk::by_token($ident) ) {
-            return $chunk;
+        if( is_array($args) && isset($args['id']) ) {
+            return Chunk::get()->byID((int)$args['id']);
+        } else {
+            if ($token) {
+                $ident = $token;
+            } elseif (array_key_exists($needle, $args)) {
+                $ident = $args[$needle];
+            }
+            if ($chunk = Chunk::by_token($ident)) {
+                return $chunk;
+            }
         }
         return false;
     }
+
+
 }

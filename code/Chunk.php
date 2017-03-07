@@ -23,6 +23,10 @@ class Chunk extends DataObject
         'Token',
     );
 
+    public function getName() {
+        return $this->Token;
+    }
+
     public function getCMSFields()
     {
         $f = parent::getCMSFields();
@@ -74,6 +78,29 @@ class Chunk extends DataObject
         }
         return false;
     }
+
+    /**
+     * Parse the shortcode and render as a string, probably with a template
+     *
+     * @param array $arguments the list of attributes of the shortcode
+     * @param string $content the shortcode content
+     * @param ShortcodeParser $parser the ShortcodeParser instance
+     * @param string $shortcode the raw shortcode being parsed
+     *
+     * @return string
+     **/
+    public static function parse_shortcode($arguments, $content, $parser, $shortcode)
+    {
+        return ChunkShortcodeHandler::handle_chunk_shortcode($arguments, $content, $parser, $shortcode);
+    }
+
+    /**
+     * @return array
+     */
+    public function getShortcodableRecords() {
+        return Chunk::get()->map('ID', 'Token')->toArray();
+    }
+
 
 
 }
