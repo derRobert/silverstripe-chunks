@@ -25,7 +25,7 @@ class ChunkShortcodeHandler extends Object
         $needle = self::config()->token_identifier;
         if( is_array($args) && isset($args['id']) ) {
             $chunk = Chunk::get()->byID((int)$args['id']);
-            return $chunk->outputObject();
+            return $chunk instanceof Chunk ? $chunk->outputObject() : false;
         } else {
             if ($token) {
                 $ident = $token;
